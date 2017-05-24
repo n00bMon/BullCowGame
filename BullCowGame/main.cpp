@@ -3,6 +3,7 @@ This acts as the 'view' in a MVC pattern, and is responsible for all user intera
 For game logic see FBullCowGame class.
 */
 
+#pragma once
 #include <iostream>
 #include <string>
 #include "FBullCowGame.h"
@@ -107,6 +108,6 @@ void PrintGameSummary()
 	}
 	else
 	{
-		std::cout << "Better Luck Next Time.\n\n";
+		std::cout << "You've Lost :(  Better Luck Next Time.\n\n";
 	}
 }
