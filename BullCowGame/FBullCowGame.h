@@ -23,20 +23,20 @@ enum class EGuessStatus
 class FBullCowGame
 {
 public:
-	FBullCowGame(); // Constructor
+	FBullCowGame();
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
 	int32 GetHiddenWordLength() const;
 	EGuessStatus CheckGuessValidity(FString Guess) const;
 	bool IsGameWon() const;
-
 	void Reset();
-	
-	// provide a new method for counting bulls and cows, and increase try #
 	FBullCowCount SubmitValidGuess(FString Guess);
 
 private:
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString MyHiddenWord;
+	bool bGameIsWon;
+	bool IsIsogram(FString) const;
+	bool IsLowerCase(FString) const;
 };

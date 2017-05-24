@@ -7,19 +7,16 @@ For game logic see FBullCowGame class.
 #include <string>
 #include "FBullCowGame.h"
 
-
 using FString = std::string;
 using int32 = int;
-
 
 void PrintIntro();
 void PlayGame();
 FString GetValidGuess();
 bool AskToPlayAgain();
-
+void PrintGameSummary();
 
 FBullCowGame BCGame;
-
 
 int main() 
 {
@@ -29,13 +26,13 @@ int main()
 		std::cout << std::endl;
 		PrintIntro();
 		PlayGame();
+		PrintGameSummary();
 		bPlayAgain = AskToPlayAgain();
 	} 
 	while (bPlayAgain);
 
 	return 0;
 }
-
 
 void PrintIntro()
 {
@@ -45,25 +42,19 @@ void PrintIntro()
 	return;
 }
 
-
 void PlayGame()
 {
 	BCGame.Reset();
 	int32 MaxTries = BCGame.GetMaxTries();
-	for (int32 i = 0; i < MaxTries; i++) // TODO change FOR loop to a WHILE loop while validating tries
+	while (!BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries)
 	{
 		FString Guess = GetValidGuess();
-		
-		// submit the valid guess to the game and recieve counts
 		FBullCowCount BullCowCount = BCGame.SubmitValidGuess(Guess);
-		
 		std::cout << "Bulls: " << BullCowCount.Bulls;
 		std::cout << "  Cows: " << BullCowCount.Cows << "\n\n";
 	}
-	// TODO summarize game
 }
 
-// loop continuosly until the user gives a valid guess
 FString GetValidGuess()
 {
 	EGuessStatus Status = EGuessStatus::Invalid;
@@ -94,11 +85,22 @@ FString GetValidGuess()
 	return Guess;
 }
 
-
 bool AskToPlayAgain()
 {
 	std::cout << "Do you want to play again? (y/n): ";
 	FString Response = "";
 	std::getline(std::cin, Response);
 	return (Response[0] == 'y') || (Response[0] == 'Y');
+}
+
+void PrintGameSummary()
+{
+	if (BCGame.IsGameWon())
+	{
+		std::cout << "Well Done! You Win.\n\n";
+	}
+	else
+	{
+		std::cout << "Better Luck Next Time.\n\n";
+	}
 }
